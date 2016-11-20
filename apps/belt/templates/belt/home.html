@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+  {% load staticfiles %}
+  <link rel="stylesheet" href="{% static 'belt/style.css' %}">
+</head>
+<body>
+  {% if messages %}
+    {% for message in messages %}
+      <p class="{{ message.tags }}" >{{message}}</p>
+    {% endfor %}
+  {% endif %}
+  <a class="inline" href="/logout">Log Out</a>
+  <a class="inline"  href="/add_plan">Make some plans!</a>
+  <a class="inline"  href="/home">Home</a>
+    <h2>Welcome, {{ user.first_name  | title}}!</h2>
+    <h3>Your Travel Plans</h3>
+    <table>
+      <thead>
+        {% if not plans %}
+          <h4>C'mon, let's travel the world!</h4>
+        {% else %}
+        <tr>
+          <th>Destination</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Plans</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for plan in plans %}
+              <tr>
+                <td><a href="/show_plan_{{ plan.id }}">{{ plan.destination | title }}</a></td>
+                <td>{{ plan.start_date }}</td>
+                <td>{{ plan.end_date }}</td>
+                <td>{{ plan.plan }}</td>
+                {% if plan.created_by.id == request.session.userID %}
+                  <td><a href="/delete_plan_{{plan.id}}">Delete Plan</a></td>
+                {% else %}
+                  <td><a href="/remove_plan_{{plan.id}}">Remove from your plans</a></td>
+                {% endif %}
+              </tr>
+          {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+    <h3>Plans by other people</h3>
+    <table>
+    <thead>
+      <tr>
+        <th>Destination</th>
+        <th>Added By</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for plan in other_plans %}
+        {% if not plan.created_by.id == user.id %}
+            <tr>
+              <td><a href="/show_plan_{{ plan.id }}">{{ plan.destination | title }}</a></td>
+                <td>{{ plan.created_by.first_name | title }} {{ plan.created_by.last_name | title }}</td>
+                <td>{{ plan.start_date }}</td>
+                <td>{{ plan.end_date }}</td>
+                <td><a href="/join_plan_process_{{plan.destination}}">Join this trip!</a></td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

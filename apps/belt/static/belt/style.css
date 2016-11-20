@@ -1,0 +1,50 @@
+.error {
+  color: red;
+  font-style: italic;
+  font-size: 10px;
+}
+
+.success{
+  color: green;
+  font-style: italic;
+  font-size: 10px;
+}
+
+input, textarea {
+  display: block;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  padding: 5px 10px;
+  background-color: #cc1212;
+  color: white;
+  margin: 10px auto;
+  text-align: center;
+  width: 150px;
+}
+
+th, td {
+  width: 200px;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+table {
+  border-collapse:collapse;
+  width: 80%;
+  margin: 20px 0;
+}
+
+.cheat{
+  color: #ccc
+}
+
+.inline{
+  display: inline-block;
+  float: right;
+  margin-right: 40px;
+  background-color: #2222ee
+}

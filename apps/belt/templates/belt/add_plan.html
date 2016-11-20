@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add a plan</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen" title="no title">
+    <link rel="stylesheet" href="{% static 'belt/style.css' %}">
+  </head>
+  <body>
+    <a class="inline" href="/logout">Log Out</a>
+    <a class="inline"  href="/home">Home</a>
+    {% if messages %}
+      {% for message in messages %}
+          <p class="{{ message.tags }}" >{{message}}</p>
+      {% endfor %}
+    {% endif %}
+    <h3>Make some plans!</h3>
+    <form action="/add_plan_process" method="post">
+      {% csrf_token %}
+      Where are you goin'?:
+      <input type="text" name="destination" >
+      When are you goin'?:
+      <input type="date" name="start_date" >
+      Return date?:
+      <input type="date" name="end_date" >
+      Whatcha' gunna' do over there?:
+      <textarea name="plan" rows="8" cols="40"></textarea>
+      <input type="submit" value="Add Plan">
+    </form>
+    <h4 class="cheat">Cheat Sheet:</h4>
+    {% for plan in plans %}
+        <p class="cheat">{{ plan.destination | title }}</p>
+    {% endfor %}
+  </body>
+</html>

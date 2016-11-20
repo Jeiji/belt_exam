@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Belt Exam</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen" title="no title">
+    <link rel="stylesheet" href="{% static 'belt/style.css' %}">
+  </head>
+  <body>
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.extra_tags == 'login'  %}
+          <p class="{{ message.tags }}" >{{message}}</p>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <h3>Login</h3>
+    <form action="/login" method="post">
+      {% csrf_token %}
+    Email:
+    <input type="text" name="email" value="{{session.lem}}">
+    Password:
+    <input type="password" name="password" value="{{session.lpw}}">
+    <input type="submit" value="Submit">
+    </form>
+
+    <h3>Registration</h3>
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.extra_tags == 'register' %}
+          <p class="{{ message.tags }}" >{{message}}</p>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <form action="/register" method="post">
+      {% csrf_token %}
+      First Name:
+      <input type="text" name="first_name" >
+      Last Name:
+      <input type="text" name="last_name">
+      Email:
+      <input type="text" name="email">
+      Password:
+      <input type="password" name="password">
+      Confirm Password:
+      <input type="password" name="confirm" >
+      <input type="submit" value="Submit">
+    </form>
+    <h4 class="cheat">Cheat Sheet:</h4>
+    {% for user in users %}
+        <p class="cheat">{{ user.email }} for {{ user.first_name | title }}</p>
+    {% endfor %}
+
+  </body>
+</html>

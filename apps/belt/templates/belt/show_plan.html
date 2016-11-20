@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Going to {{ plan.destination }}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'belt/style.css' %}">
+  </head>
+  <body>
+    <a class="inline" href="/logout">Log Out</a>
+    <a class="inline"  href="/add_plan">Make some plans!</a>
+    <a class="inline"  href="/home">Home</a>
+
+    <h2>{{ plan.destination | title }} Plans</h2>
+    <h3>Organizer:</h3>{{ plan.created_by.first_name | title }} {{ plan.created_by.last_name | title }}
+    <h3>Plan:</h3>{{ plan.plan }}
+    <h3>Start Date:</h3>{{ plan.start_date }}
+    <h3>End Date:</h3>{{ plan.end_date }}
+
+    <h3>Who's going to {{  plan.destination | title }}?:</h3>
+      {% for user in users %}
+        {% if not user.id == plan.created_by.id %}
+          {% if user.id == request.session.userID %}
+            <p>You!</p>
+          {% else %}
+            <p>  {{ user.first_name | title }} {{ user.last_name | title }}</p>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+  </body>
+</html>
